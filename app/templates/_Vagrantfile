@@ -1,0 +1,27 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# Vagrantfile API/syntax version. Don't touch unless you know what you're doing!
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+
+ config.vm.provider :virtualbox do |vbox, override|
+    override.vm.box = 'wheezy64'
+    override.vm.box_url = 'https://sovereign.lukecyca.com/vagrant/wheezy64.box'
+    vbox.customize ["modifyvm", :id, "--memory", 512]
+  end
+
+  config.vm.network :private_network, ip: "192.168.1.10"
+  config.vm.synced_folder "./", "/var/www/eventsheep"
+
+  config.vm.provision :ansible do |ansible|
+    ansible.playbook = 'webserver.yml'
+    ansible.host_key_checking = false
+
+    # Workaround: https://github.com/mitchellh/vagrant/issues/2174
+    extra_vars = { ansible_ssh_user: 'vagrant', testing: true}
+    ansible.raw_arguments = "--extra-vars=" + extra_vars.map { |k,v| "#{k}=#{v}" }.join(" ")
+  end
+  
+end

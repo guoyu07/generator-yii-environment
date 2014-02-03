@@ -1,0 +1,25 @@
+{
+    "name": "stvnwrgs/eventsheep-base",
+    "description": "Base for Eventsheep",
+    "keywords": [
+        "event"
+    ],
+    "type": "application",
+    "homepage": "http://html5boilerplate.com",
+    "license": "MIT",
+    "require": {
+        "php": ">=5.3.2",
+        "yiisoft/yii": "1.1.*"
+    },
+    "require-dev": {
+       
+    },
+    "repositories": [
+        {
+            "packagist": false
+        },{
+            "type":"composer",
+            "url": "http://packages.phundament.com"
+        }
+    ]
+}
